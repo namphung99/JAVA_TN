@@ -13,21 +13,13 @@ public class TN05_Chuan_Hoa_Xau_HT {
         Scanner in = new Scanner(System.in);
         int t = Integer.parseInt(in.nextLine());
         while(t-->0){
-            System.out.println(chuanHoa(in.nextLine()));
-        }
-    }
-    
-    public static String chuanHoa(String s){
-        StringTokenizer st = new StringTokenizer(s);
-        StringBuilder kq = new StringBuilder();
-        while(st.hasMoreTokens()){
-            String tmp =st.nextToken();
-            kq.append(Character.toUpperCase(tmp.charAt(0)));
-            for(int i =1; i<tmp.length();i++){
-                kq.append(Character.toLowerCase(tmp.charAt(i)));
+            String s = in.nextLine();
+            String[] strs = s.trim().toLowerCase().split("\\s++");
+            String res = "";
+            for (String str : strs) {
+                res += str.substring(0, 1).toUpperCase() + str.substring(1) + " ";
             }
-            kq.append(" ");
+            System.out.println(res.trim());
         }
-        return kq.toString().trim();
     }
 }
