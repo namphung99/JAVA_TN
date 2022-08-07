@@ -1,76 +1,57 @@
 
-import java.util.Scanner;
+import java.util.*;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
  * @author BENH VIEN CONG NGHE
  */
 public class TN13_SX_CV {
-    public static int[] arr, deadline;
-    public static int n;
+    static class TwoNumber {
+        int key, value;
 
-    public static void swap(int i, int j) {
-        int temp;
-        temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-        temp = deadline[i];
-        deadline[i] = deadline[j];
-        deadline[j] = temp;
-    }
-
-    public static void sort(int a[], int s, int e) {
-        if (s >= e)
-            return;
-        int index = (e - s) / 2 + s;
-        int pivot = a[index];
-        int k = s - 1;
-        swap(index, e);
-        for (int i = s; i < e; i++)
-            if (a[i] < pivot) {
-                k++;
-                swap(i, k);
-            }
-        k++;
-        swap(k, e);
-        sort(a, s, k - 1);
-        sort(a, k + 1, e);
-    }
-
-    public static void solve() {
-        int res = 1;
-        int end = deadline[0];
-        for (int i = 1; i < n; i++) {
-            if (deadline[i] == end)
-                continue;
-            if (arr[i] >= end) {
-                res++;
-                end = deadline[i];
-            }
+        public TwoNumber(int key, int value) {
+            this.key = key;
+            this.value = value;
         }
-        System.out.println(res);
+
+        public int getKey() {
+            return key;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int t = sc.nextInt();
-        while (t-- > 0) {
-            n = sc.nextInt();
-            arr = new int[n + 1];
-            deadline = new int[n + 1];
-
-            for (int i = 0; i < n; i++) {
-                arr[i] = sc.nextInt();
-                deadline[i] = sc.nextInt();
+        int test = sc.nextInt();
+        while (test-- > 0) {
+            int n = sc.nextInt();
+            TwoNumber[] a = new TwoNumber[n+5];
+            for (int i = 1; i <= n; i++) {
+                a[i] = new TwoNumber(sc.nextInt(), sc.nextInt());
             }
-            sort(deadline, 0, n - 1);
-            solve();
+            Arrays.sort(a, 1, n + 1, new Comparator<TwoNumber>() {
+                @Override
+                public int compare(TwoNumber o1, TwoNumber o2) {
+                    if (o1.getValue() == o2.getValue()) {
+                        return o2.getKey() - o1.getKey();
+                    }
+                    return o1.getValue() - o2.getValue();
+                }
+            });
+            int res = 0;
+            int count = 0;
+            for (int i = 1; i <= n; i++) {
+                if (res < a[i].getKey()) {
+                    res = a[i].getValue();
+                    count++;
+                }
+            }
+            System.out.println(count);
         }
     }
 }
